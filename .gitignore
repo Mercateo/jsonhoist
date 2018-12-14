@@ -1,0 +1,15 @@
+/target
+/bin
+/.classpath
+/.project
+/.settings
+/*.iml
+/*.eml
+/*.idea
+/*.ipr
+/*.iws
+LOG*
+src/gen/**
+*~
+
+

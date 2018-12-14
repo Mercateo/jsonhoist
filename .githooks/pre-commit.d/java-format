@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -e
+
+PREFIX="> pre-commit [$(basename $0)]\t\t"
+echo -e "$PREFIX checking format of java files"
+mvn -q formatter:validate || ( echo -e "$PREFIX Formatting of java files does not validate according to definition in src/eclipse. I'll do it for you..." && mvn formatter:format && echo "Please recheck index and commit again." && exit 1)

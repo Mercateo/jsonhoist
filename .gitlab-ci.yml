@@ -1,0 +1,45 @@
+image: maven:3.5.2-jdk-8-alpine
+
+variables:
+  MAVEN_REPO: ".m2"
+  MVN_CMD_PREFIX: "mvn -B -Dmaven.repo.local=$MAVEN_REPO"
+
+cache:
+  paths:
+    - $MAVEN_REPO
+
+stages:
+  - validate
+  - build
+  - test
+  - it
+
+validate:
+  stage: validate
+  script:
+    - $MVN_CMD_PREFIX clean validate
+
+compile:
+  stage: build
+  script:
+    - $MVN_CMD_PREFIX compile
+  artifacts:
+    paths:
+    - target
+
+test:
+  stage: test
+  script:
+    - $MVN_CMD_PREFIX test
+  artifacts:
+    paths:
+    - target
+  dependencies:
+  - compile
+
+it:
+  stage: it
+  script:
+    - $MVN_CMD_PREFIX verify
+  dependencies:
+  - test
