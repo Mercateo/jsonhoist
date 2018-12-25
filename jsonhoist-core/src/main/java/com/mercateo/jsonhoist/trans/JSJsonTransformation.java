@@ -1,0 +1,98 @@
+package com.mercateo.jsonhoist.trans;
+
+import java.io.IOException;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.util.Map;
+
+import javax.script.Compilable;
+import javax.script.CompiledScript;
+import javax.script.Invocable;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+
+import org.springframework.util.StreamUtils;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.mercateo.jsonhoist.AbstractJsonTransformation;
+import com.mercateo.jsonhoist.exc.HoistException;
+
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NonNull;
+
+/**
+ * A JavaScript based Transformation, that exposes its script for optimization
+ * purposes.
+ *
+ * This class is Threadsafe.
+ *
+ * @author usr
+ *
+ */
+public class JSJsonTransformation extends AbstractJsonTransformation {
+
+    public static final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
+
+    private final CompiledScript script;
+
+    private Invocable invocable;
+
+    @NonNull
+    @Getter(AccessLevel.PROTECTED)
+    private final String scriptText;
+
+    protected JSJsonTransformation(@NonNull String scriptText) {
+
+        this.scriptText = scriptText;
+
+        // on special request:
+        ScriptEngine engine = null;
+        synchronized (scriptEngineManager) {
+            // no guarantee is found anywhere, that creating a scriptEngine was
+            // supposed to be threadsafe, so...
+            engine = scriptEngineManager.getEngineByName("nashorn");
+        }
+        Compilable compilable = (Compilable) engine;
+        invocable = (Invocable) engine;
+
+        try {
+            String wrapperScript = wrapperScript(scriptText);
+            script = compilable.compile(wrapperScript);
+            script.eval();
+        } catch (ScriptException e) {
+            throw new HoistException(e);
+        }
+
+    }
+
+    public JSJsonTransformation(URL url) {
+        this(fetchContent(url));
+    }
+
+    private static String fetchContent(URL url) {
+        try {
+            return StreamUtils.copyToString(url.openStream(), Charset.forName("UTF-8"));
+        } catch (IOException e) {
+            throw new HoistException("While fetching js from " + url, e);
+        }
+    }
+
+    private String wrapperScript(String script) {
+        return "exec = " + script;
+    }
+
+    @Override
+    public JsonNode transform(@NonNull JsonNode source) {
+        try {
+            @SuppressWarnings("unchecked")
+            Map<String, Object> jsonAsMap = om.convertValue(source, Map.class);
+            invocable.invokeFunction("exec", jsonAsMap);
+            return om.convertValue(jsonAsMap, JsonNode.class);
+        } catch (NoSuchMethodException | ScriptException e) {
+            throw new HoistException(e);
+        }
+    }
+
+}
