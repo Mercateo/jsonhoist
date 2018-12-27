@@ -10,6 +10,7 @@ import com.mercateo.jsonhoist.HoistMetadataProcessorImpl;
 import com.mercateo.jsonhoist.HoistObjectMapper;
 import com.mercateo.jsonhoist.JsonHoist;
 import com.mercateo.jsonhoist.JsonHoistImpl;
+import com.mercateo.jsonhoist.trans.ClassPathJSJsonTransformationLoader;
 import com.mercateo.jsonhoist.trans.JsonTransformationRepository;
 
 /**
@@ -33,6 +34,12 @@ public class JsonHoistAutoConfiguration {
 	@Bean
 	public JsonTransformationRepository transformationRepository() {
 		return new JsonTransformationRepository();
+	}
+
+	@ConditionalOnMissingBean
+	@Bean
+	public ClassPathJSJsonTransformationLoader loader(JsonTransformationRepository repo) {
+		return new ClassPathJSJsonTransformationLoader(repo);
 	}
 
 	@ConditionalOnMissingBean
