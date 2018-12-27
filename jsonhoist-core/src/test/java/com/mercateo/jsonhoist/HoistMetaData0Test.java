@@ -1,12 +1,14 @@
 package com.mercateo.jsonhoist;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.mercateo.jsonhoist.HoistMetaData;
+import org.junit.jupiter.api.Test;
 
 public class HoistMetaData0Test {
-    @Test(expected = NullPointerException.class)
-    public void testNullContract() throws Exception {
-        HoistMetaData.of(null, 1L);
-    }
+	@Test
+	public void testNullContract() throws Exception {
+		assertThrows(NullPointerException.class, () -> {
+			HoistMetaData.of(null, 1L);
+		});
+	}
 }

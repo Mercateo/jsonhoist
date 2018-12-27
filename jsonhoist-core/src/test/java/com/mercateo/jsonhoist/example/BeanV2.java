@@ -9,11 +9,11 @@ import lombok.Getter;
 @HoistVersion(value = 2, type = "foo")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BeanV2 {
-    String firstName;
+	String firstName;
 
-    String lastName;
+	String lastName;
 
-    String fullName;
+	String fullName;
 
-    int age = -1;
+	int age = -1;
 }

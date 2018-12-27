@@ -13,21 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.mercateo.jsonhoist;
+package com.mercateo.jsonhoist.trans;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 
-/**
- * Main interface that provides a means to upcast a json document from one
- * version to another
- *
- * @author usr
- */
-public interface JsonHoist {
+import lombok.NonNull;
+import lombok.Value;
 
-	JsonNode transform(String json, HoistMetaData target);
+@Value
+class ClassPathResource {
+	private URL url;
+	public @NonNull URI getURI() {
+		try {
+			return url.toURI();
+		} catch (URISyntaxException e) {
+			throw new IllegalStateException(e);
+		}
+	}
 
-	JsonNode transform(JsonNode rootNode, HoistMetaData target);
+	public String getFilename() {
+		String externalForm = url.toExternalForm();
+		return externalForm.substring(externalForm.lastIndexOf("/"));
+	}
 
-	HoistMetaDataProcessor getMetaDataProcessor();
 }

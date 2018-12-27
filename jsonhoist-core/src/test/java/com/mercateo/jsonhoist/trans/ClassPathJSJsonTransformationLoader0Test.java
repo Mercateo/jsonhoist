@@ -1,48 +1,43 @@
 package com.mercateo.jsonhoist.trans;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.mercateo.jsonhoist.HoistMetaData;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class ClassPathJSJsonTransformationLoader0Test {
 
-    @Mock
-    private JsonTransformationRepository mockRepo;
+	@Mock
+	private JsonTransformationRepository mockRepo;
 
-    @Test
-    public void testRoundTrip() throws Exception {
-        ClassPathJSJsonTransformationLoader uut = new ClassPathJSJsonTransformationLoader(
-                "classpath:loadertest/1/**/*.js", mockRepo);
+	@Test
+	public void testRoundTrip() throws Exception {
+		ClassPathJSJsonTransformationLoader uut = new ClassPathJSJsonTransformationLoader(".*/loadertest/1/.*/.*\\.js",
+				mockRepo);
 
-        uut.load();
+		uut.load();
 
-        verify(mockRepo).register(eq(HoistMetaData.of("testtype", 1)), eq(HoistMetaData.of(
-                "testtype", 2)), any());
-        verify(mockRepo).register(eq(HoistMetaData.of("testtype", 2)), eq(HoistMetaData.of(
-                "testtype", 3)), any());
-        verifyNoMoreInteractions(mockRepo);
+		verify(mockRepo).register(eq(HoistMetaData.of("testtype", 1)), eq(HoistMetaData.of("testtype", 2)), any());
+		verify(mockRepo).register(eq(HoistMetaData.of("testtype", 2)), eq(HoistMetaData.of("testtype", 3)), any());
+		verifyNoMoreInteractions(mockRepo);
 
-    }
+	}
 
-    @Test
-    public void testLoad() throws Exception {
-        JsonTransformationRepository emptyRepo = new JsonTransformationRepository();
-        ClassPathJSJsonTransformationLoader uut = new ClassPathJSJsonTransformationLoader(
-                "classpath:loadertest/1/**/*.js", emptyRepo);
+	@Test
+	public void testLoad() throws Exception {
+		JsonTransformationRepository emptyRepo = new JsonTransformationRepository();
+		ClassPathJSJsonTransformationLoader uut = new ClassPathJSJsonTransformationLoader("/xyz.*", emptyRepo);
 
-        JsonTransformationRepository repo = uut.load();
-
-        assertThat(repo).isSameAs(emptyRepo);
-    }
+		JsonTransformationRepository repo = uut.load();
+// must be the same reference
+		assertThat(repo).isSameAs(emptyRepo);
+	}
 
 }

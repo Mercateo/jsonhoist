@@ -10,8 +10,8 @@ import lombok.Getter;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BeanV3 {
 
-    String name;
+	String name;
 
-    Details details;
+	Details details;
 
 }

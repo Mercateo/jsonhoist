@@ -1,37 +1,37 @@
 package com.mercateo.jsonhoist.simple;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.mercateo.jsonhoist.HoistMetadataProcessorImpl;
 import com.mercateo.jsonhoist.HoistVersion;
 
 public class SimpleMetadataProcessorTest {
 
-    @Test
-    public void testVersionOnly() throws Exception {
+	@Test
+	public void testVersionOnly() throws Exception {
 
-        HoistMetadataProcessorImpl uut = new HoistMetadataProcessorImpl();
-        assertEquals(173, uut.extract(Version173.class).getVersion());
-        assertEquals(Version173.class.getSimpleName(), uut.extract(Version173.class).getType());
+		HoistMetadataProcessorImpl uut = new HoistMetadataProcessorImpl();
+		assertEquals(173, uut.extract(Version173.class).getVersion());
+		assertEquals(Version173.class.getSimpleName(), uut.extract(Version173.class).getType());
 
-    }
+	}
 
-    @Test
-    public void testTypeOverride() throws Exception {
+	@Test
+	public void testTypeOverride() throws Exception {
 
-        HoistMetadataProcessorImpl uut = new HoistMetadataProcessorImpl();
-        assertEquals(1, uut.extract(SomePojoWithOverriddenType.class).getVersion());
-        assertEquals("Narf", uut.extract(SomePojoWithOverriddenType.class).getType());
+		HoistMetadataProcessorImpl uut = new HoistMetadataProcessorImpl();
+		assertEquals(1, uut.extract(SomePojoWithOverriddenType.class).getVersion());
+		assertEquals("Narf", uut.extract(SomePojoWithOverriddenType.class).getType());
 
-    }
+	}
 
-    @HoistVersion(173)
-    static class Version173 {
-    }
+	@HoistVersion(173)
+	static class Version173 {
+	}
 
-    @HoistVersion(value = 1, type = "Narf")
-    static class SomePojoWithOverriddenType {
-    }
+	@HoistVersion(value = 1, type = "Narf")
+	static class SomePojoWithOverriddenType {
+	}
 }

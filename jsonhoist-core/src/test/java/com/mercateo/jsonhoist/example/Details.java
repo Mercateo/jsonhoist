@@ -4,9 +4,9 @@ import lombok.Getter;
 
 @Getter
 public class Details {
-    String first;
+	String first;
 
-    String last;
+	String last;
 
-    int age;
+	int age;
 }
