@@ -111,11 +111,7 @@ public class JSJsonTransformation extends AbstractJsonTransformation {
 		}
 	}
 
-	public static String copyToString(InputStream in, Charset charset) throws IOException {
-		if (in == null) {
-			return "";
-		}
-
+	public static String copyToString(@NonNull InputStream in, Charset charset) throws IOException {
 		StringBuilder out = new StringBuilder();
 		InputStreamReader reader = new InputStreamReader(in, charset);
 		char[] buffer = new char[1024];

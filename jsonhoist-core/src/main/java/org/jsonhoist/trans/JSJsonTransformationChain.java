@@ -53,7 +53,7 @@ class JSJsonTransformationChain extends JSJsonTransformation implements JsonTran
 		}
 
 		String fns = transformations.stream().map(t -> JSJsonTransformation.class.cast(t))
-				.map(JSJsonTransformation::getScriptText).collect(Collectors.joining(","));
+				.map(JSJsonTransformation::scriptText).collect(Collectors.joining(","));
 		return WRAPPER_FUNCTION_PREFIX + fns + WRAPPER_FUNCTION_SUFFIX;
 	}
 }

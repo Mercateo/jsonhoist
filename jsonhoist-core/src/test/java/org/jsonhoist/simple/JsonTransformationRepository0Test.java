@@ -34,9 +34,9 @@ public class JsonTransformationRepository0Test {
 		AnnotatedJsonTransformation step2 = (AnnotatedJsonTransformation) p.get(1);
 		AnnotatedJsonTransformation step3 = (AnnotatedJsonTransformation) p.get(2);
 
-		assertThat(step1.getId()).isEqualTo(1);
-		assertThat(step2.getId()).isEqualTo(3);
-		assertThat(step3.getId()).isEqualTo(5);
+		assertThat(step1.id()).isEqualTo(1);
+		assertThat(step2.id()).isEqualTo(3);
+		assertThat(step3.id()).isEqualTo(5);
 
 	}
 

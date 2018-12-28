@@ -38,6 +38,7 @@ public class HoistMetadataProcessorImpl implements HoistMetaDataProcessor {
 	private static final String TYPE = "type";
 
 	private static final String VERSION = "version";
+	private static final String MINOR = "minor";
 
 	private static final String _META = "_hoistmetadata";
 
@@ -57,32 +58,38 @@ public class HoistMetadataProcessorImpl implements HoistMetaDataProcessor {
 				.filter(annotatedType -> !annotatedType.equals(HoistVersion.NO_TYPE)).orElse(clazz.getSimpleName());
 
 		long version = versionAnnotation.map(HoistVersion::value).orElse(0L);
+		long minor = versionAnnotation.map(HoistVersion::minor).orElse(0L);
 
-		return HoistMetaData.of(type, version);
+		return HoistMetaData.of(type, version, minor);
 	}
 
 	@Override
 	public HoistMetaData extract(@NonNull JsonNode rootNode, @NonNull HoistMetaData defaultMetaData) {
-		String type = defaultMetaData.getType();
-		long version = defaultMetaData.getVersion();
+		String type = defaultMetaData.type();
+		long version = defaultMetaData.version();
+		long minor = defaultMetaData.minor();
 
 		if (rootNode.has(_META)) {
 			ObjectNode meta = (ObjectNode) rootNode.get(_META);
 			if (meta.has(VERSION)) {
 				version = meta.get(VERSION).asLong();
 			}
+			if (meta.has(MINOR)) {
+				minor = meta.get(MINOR).asLong();
+			}
+
 			if (meta.has(TYPE)) {
 				type = meta.get(TYPE).asText();
 			}
 		}
-		return HoistMetaData.of(type, version);
+		return HoistMetaData.of(type, version, minor);
 	}
 
 	@Override
 	public void add(@NonNull HoistMetaData md, @NonNull ObjectNode rootNode) {
 		ObjectNode meta = om.createObjectNode();
-		meta.put(TYPE, md.getType());
-		meta.put(VERSION, md.getVersion());
+		meta.put(TYPE, md.type());
+		meta.put(VERSION, md.version());
 		rootNode.set(_META, meta);
 	}
 

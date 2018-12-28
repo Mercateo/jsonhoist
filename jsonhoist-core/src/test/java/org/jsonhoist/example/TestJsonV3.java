@@ -4,16 +4,12 @@ import org.jsonhoist.HoistVersion;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
-@HoistVersion(value = 3, type = "foo")
+// there is no mapping for v3
+@HoistVersion(type = "TestJson", value = 3)
+@Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class BeanV3 {
-	
-
-	String name;
-
-	Details details;
-
+public class TestJsonV3 {
+	private String fullName;
 }

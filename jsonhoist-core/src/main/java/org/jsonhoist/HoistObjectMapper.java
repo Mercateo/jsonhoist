@@ -45,7 +45,7 @@ public class HoistObjectMapper {
 	public <T> T readValue(@NonNull String json, @NonNull Class<T> targetClass)
 			throws JsonProcessingException, IOException {
 
-		HoistMetaData to = jsonHoist.getMetaDataProcessor().extract(targetClass);
+		HoistMetaData to = jsonHoist.metaDataProcessor().extract(targetClass);
 
 		JsonNode tree = objectMapper.readTree(json);
 		JsonNode hoistedTree = jsonHoist.transform(tree, to);
@@ -54,7 +54,7 @@ public class HoistObjectMapper {
 	}
 
 	public String writeValue(@NonNull Object o) {
-		HoistMetaDataProcessor proc = jsonHoist.getMetaDataProcessor();
+		HoistMetaDataProcessor proc = jsonHoist.metaDataProcessor();
 		HoistMetaData md = proc.extract(o.getClass());
 		ObjectNode root = objectMapper.valueToTree(o);
 		proc.add(md, root);

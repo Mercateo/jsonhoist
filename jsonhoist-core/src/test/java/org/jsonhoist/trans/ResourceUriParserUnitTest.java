@@ -7,7 +7,7 @@ import java.net.URI;
 
 import org.junit.jupiter.api.Test;
 
-public class ResourceUriParserUnit0Test {
+public class ResourceUriParserUnitTest {
 
 	private final URI jarUri = URI
 			.create("jar:file:/Users/foo/bar/foobar.jar!/BOOT-INF/classes!/jsonhoist/repository/SomeType/1-2.js");
@@ -61,12 +61,12 @@ public class ResourceUriParserUnit0Test {
 	@Test
 	public void testGetFileName() throws Exception {
 		ResourceUriParser uut = new ResourceUriParser(jarUri);
-		assertThat(uut.getFileName()).isEqualTo("1-2.js");
+		assertThat(uut.fileName()).isEqualTo("1-2.js");
 	}
 
 	@Test
 	public void testGetType() throws Exception {
 		ResourceUriParser uut = new ResourceUriParser(jarUri);
-		assertThat(uut.getType()).isEqualTo("SomeType");
+		assertThat(uut.type()).isEqualTo("SomeType");
 	}
 }

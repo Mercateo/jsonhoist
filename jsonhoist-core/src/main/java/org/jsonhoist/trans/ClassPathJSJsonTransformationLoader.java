@@ -36,6 +36,8 @@ import lombok.NonNull;
  */
 public class ClassPathJSJsonTransformationLoader {
 
+	public static final String DEFAULT_RESOURCE_PATTERN = ".*/jsonhoist/repository/.*\\.js";
+
 	@NonNull
 	private String pattern;
 
@@ -43,7 +45,7 @@ public class ClassPathJSJsonTransformationLoader {
 	private JsonTransformationRepository repo;
 
 	public ClassPathJSJsonTransformationLoader(@NonNull JsonTransformationRepository repo) {
-		this(".*/jsonhoist/repository/.*\\.js", repo);
+		this(DEFAULT_RESOURCE_PATTERN, repo);
 	}
 
 	public ClassPathJSJsonTransformationLoader(@NonNull String pattern, @NonNull JsonTransformationRepository repo) {
@@ -62,8 +64,8 @@ public class ClassPathJSJsonTransformationLoader {
 
 			if (res != null) {
 				ResourceUriParser p = new ResourceUriParser(res.getURI());
-				String type = p.getType();
-				String name = p.getFileName();
+				String type = p.type();
+				String name = p.fileName();
 				name = name.substring(0, name.indexOf("."));
 				String[] split = name.split("-");
 				if (split.length != 2) {

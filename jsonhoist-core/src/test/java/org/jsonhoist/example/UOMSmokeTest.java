@@ -31,7 +31,6 @@ public class UOMSmokeTest {
 		HoistMetaDataProcessor p = new HoistMetadataProcessorImpl();
 
 		uut = new HoistObjectMapper(om, new JsonHoistImpl(p, repo));
-
 	}
 
 	@Test

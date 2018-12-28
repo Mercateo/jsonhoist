@@ -18,8 +18,6 @@ package org.jsonhoist.trans;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -47,14 +45,4 @@ public class ClassPathFilter {
 		}
 	}
 
-	private List<String> getResourceFiles(String path) throws IOException {
-		Collection<String> r = ResourceList.getResources(Pattern.compile(pattern));
-		return new ArrayList<>(r);
-	}
-
-	public static void main(String[] args) throws IOException {
-		//
-		new ClassPathFilter(".*/jsonhoist/repository/.*/.*\\.js").listRecursive().forEach(System.out::println);
-
-	}
 }

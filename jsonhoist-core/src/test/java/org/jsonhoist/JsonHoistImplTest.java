@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package org.jsonhoist;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,8 +22,12 @@ import com.fasterxml.jackson.databind.node.TextNode;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * @author usr
+ *
+ */
 @ExtendWith(MockitoExtension.class)
-public class JsonHoistImpl0Test {
+public class JsonHoistImplTest {
 	@Mock
 	JsonTransformationRepository r;
 
@@ -74,4 +81,34 @@ public class JsonHoistImpl0Test {
 		}
 	}
 
+
+	@Test
+	void testNullContracts() throws Exception {
+
+		assertThrows(NullPointerException.class, () -> {
+			new JsonHoistImpl(null);
+		});
+		assertThrows(NullPointerException.class, () -> {
+			new JsonHoistImpl(mock(HoistMetaDataProcessor.class), null);
+		});
+
+		assertThrows(NullPointerException.class, () -> {
+			new JsonHoistImpl(null, mock(JsonTransformationRepository.class));
+		});
+
+		JsonHoistImpl uut = new JsonHoistImpl(mock(JsonTransformationRepository.class));
+
+		assertThrows(NullPointerException.class, () -> {
+			uut.transform((String) null, HoistMetaData.of("foo", 1));
+		});
+		assertThrows(NullPointerException.class, () -> {
+			uut.transform((JsonNode) null, HoistMetaData.of("foo", 1));
+		});
+		assertThrows(NullPointerException.class, () -> {
+			uut.transform("{}", null);
+		});
+		assertThrows(NullPointerException.class, () -> {
+			uut.transform(new TextNode(""), null);
+		});
+	}
 }

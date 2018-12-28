@@ -12,17 +12,16 @@ public class SimpleMetadataProcessorTest {
 	public void testVersionOnly() throws Exception {
 
 		HoistMetadataProcessorImpl uut = new HoistMetadataProcessorImpl();
-		assertEquals(173, uut.extract(Version173.class).getVersion());
-		assertEquals(Version173.class.getSimpleName(), uut.extract(Version173.class).getType());
-
+		assertEquals(173, uut.extract(Version173.class).version());
+		assertEquals(Version173.class.getSimpleName(), uut.extract(Version173.class).type());
 	}
 
 	@Test
 	public void testTypeOverride() throws Exception {
 
 		HoistMetadataProcessorImpl uut = new HoistMetadataProcessorImpl();
-		assertEquals(1, uut.extract(SomePojoWithOverriddenType.class).getVersion());
-		assertEquals("Narf", uut.extract(SomePojoWithOverriddenType.class).getType());
+		assertEquals(1, uut.extract(SomePojoWithOverriddenType.class).version());
+		assertEquals("Narf", uut.extract(SomePojoWithOverriddenType.class).type());
 
 	}
 

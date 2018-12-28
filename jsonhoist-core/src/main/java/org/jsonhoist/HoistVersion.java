@@ -32,6 +32,7 @@ public @interface HoistVersion {
 	String NO_TYPE = "__NO_TYPE";
 
 	long value();
+	long minor() default 0;
 
 	String type() default NO_TYPE;
 

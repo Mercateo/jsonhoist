@@ -31,4 +31,10 @@ public class HoistMetaData {
 
 	long version;
 
+	long minor;
+
+	public static HoistMetaData of(@NonNull String type, long version) {
+		return of(type, version, 0);
+	}
+	
 }

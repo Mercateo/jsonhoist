@@ -46,7 +46,7 @@ public class JsonTransformationRepository {
 		if (!path.isPresent()) {
 			throw new HoistException("Cannot hoist from " + from + " to " + to);
 		}
-		return path.get().stream().map(JsonTransformationStep::getTransformation).collect(Collectors.toList());
+		return path.get().stream().map(JsonTransformationStep::transformation).collect(Collectors.toList());
 	}
 
 	private Optional<List<JsonTransformationStep>> path(@NonNull List<JsonTransformationStep> journey,
@@ -61,7 +61,7 @@ public class JsonTransformationRepository {
 		if (options.isPresent()) {
 			for (JsonTransformationStep jsonTransformationStep : options.get()) {
 				if (!alreadyVisited(journey, jsonTransformationStep)) {
-					HoistMetaData transformationTarget = jsonTransformationStep.getTarget();
+					HoistMetaData transformationTarget = jsonTransformationStep.target();
 					List<JsonTransformationStep> newPossibleJourney = new LinkedList<>(journey);
 					newPossibleJourney.add(jsonTransformationStep);
 
@@ -93,13 +93,13 @@ public class JsonTransformationRepository {
 
 	protected boolean alreadyVisited(List<JsonTransformationStep> journey,
 			JsonTransformationStep jsonTransformationStep) {
-		return journey.stream().map(step -> step.getTarget()).filter(jsonTransformationStep.getTarget()::equals)
+		return journey.stream().map(JsonTransformationStep::target).filter(jsonTransformationStep.target()::equals)
 				.findAny().isPresent();
 	}
 
 	private void assertSameType(HoistMetaData from, HoistMetaData to) {
-		String fromType = from.getType();
-		String toType = to.getType();
+		String fromType = from.type();
+		String toType = to.type();
 
 		if (!fromType.equals(toType)) {
 			throw new IllegalArgumentException(

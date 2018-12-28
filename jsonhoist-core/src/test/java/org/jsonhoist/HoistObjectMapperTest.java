@@ -1,22 +1,41 @@
+/**
+ * 
+ */
 package org.jsonhoist;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import java.io.IOException;
 
+import org.jsonhoist.example.TestJsonV1;
+import org.jsonhoist.example.TestJsonV2;
+import org.jsonhoist.example.TestJsonV3;
 import org.jsonhoist.exc.HoistException;
 import org.jsonhoist.trans.ClassPathJSJsonTransformationLoader;
 import org.jsonhoist.trans.JsonTransformationRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import lombok.Data;
+/**
+ * @author usr
+ *
+ */
+public class HoistObjectMapperTest {
 
-public class HoistObjectMapper0Test {
+	@Test
+	void testNullContracts() throws Exception {
+		HoistObjectMapper uut = new HoistObjectMapper(mock(ObjectMapper.class), mock(JsonHoist.class));
+
+		assertThrows(NullPointerException.class, () -> {
+			uut.writeValue(null);
+		});
+
+	}
+
 	private HoistObjectMapper uut;
 
 	private JsonTransformationRepository repo;
@@ -60,31 +79,5 @@ public class HoistObjectMapper0Test {
 			String json = uut.writeValue(v1);
 			uut.readValue(json, TestJsonV3.class);
 		});
-	}
-
-	@HoistVersion(type = "TestJson", value = 1)
-	@Data
-	@JsonIgnoreProperties(ignoreUnknown = true)
-	public static class TestJsonV1 {
-		private String firstName;
-
-		private String lastName;
-	}
-
-	// upcast here:
-	// /content-json-upcaster/src/test/resources/jsonhoist/repository/TestJson/1-2.js
-	@HoistVersion(type = "TestJson", value = 2)
-	@Data
-	@JsonIgnoreProperties(ignoreUnknown = true)
-	public static class TestJsonV2 {
-		private String fullName;
-	}
-
-	// there is no mapping for v3
-	@HoistVersion(type = "TestJson", value = 3)
-	@Data
-	@JsonIgnoreProperties(ignoreUnknown = true)
-	public static class TestJsonV3 {
-		private String fullName;
 	}
 }

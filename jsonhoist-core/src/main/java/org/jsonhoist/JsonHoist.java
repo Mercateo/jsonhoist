@@ -29,5 +29,5 @@ public interface JsonHoist {
 
 	JsonNode transform(JsonNode rootNode, HoistMetaData target);
 
-	HoistMetaDataProcessor getMetaDataProcessor();
+	HoistMetaDataProcessor metaDataProcessor();
 }

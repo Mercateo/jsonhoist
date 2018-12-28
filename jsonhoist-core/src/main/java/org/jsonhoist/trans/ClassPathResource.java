@@ -24,7 +24,7 @@ import lombok.Value;
 
 @Value
 class ClassPathResource {
-	private URL url;
+	URL url;
 	public @NonNull URI getURI() {
 		try {
 			return url.toURI();
