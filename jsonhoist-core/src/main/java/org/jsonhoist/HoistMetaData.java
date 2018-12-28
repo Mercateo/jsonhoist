@@ -36,5 +36,5 @@ public class HoistMetaData {
 	public static HoistMetaData of(@NonNull String type, long version) {
 		return of(type, version, 0);
 	}
-	
+
 }

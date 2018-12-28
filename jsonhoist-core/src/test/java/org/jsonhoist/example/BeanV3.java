@@ -10,7 +10,6 @@ import lombok.Getter;
 @HoistVersion(value = 3, type = "foo")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BeanV3 {
-	
 
 	String name;
 

@@ -81,7 +81,6 @@ public class JsonHoistImplTest {
 		}
 	}
 
-
 	@Test
 	void testNullContracts() throws Exception {
 

@@ -19,50 +19,51 @@ import com.fasterxml.jackson.databind.node.TextNode;
 
 public class JSJsonTransformationChainTest {
 
-@Test
-void testNullContracts() throws Exception {
-	assertThrows(NullPointerException.class, () -> {
-		new JSJsonTransformationChain(null);
-	});
-	
-}	@Test
-public void testNullContract() {
-	expectNPE(() -> new JSJsonTransformationChain(null));
-}
+	@Test
+	void testNullContracts() throws Exception {
+		assertThrows(NullPointerException.class, () -> {
+			new JSJsonTransformationChain(null);
+		});
 
-private void expectNPE(Runnable r) {
-	try {
-		r.run();
-	} catch (NullPointerException e) {
-	} catch (Throwable e) {
-		throw new AssertionError("NPE Expected");
 	}
-}
+	@Test
+	public void testNullContract() {
+		expectNPE(() -> new JSJsonTransformationChain(null));
+	}
 
-@Test
-public void testEmptyList() throws Exception {
-	assertThrows(IllegalArgumentException.class, () -> {
-		new JSJsonTransformationChain(new LinkedList<>());
-	});
-}
+	private void expectNPE(Runnable r) {
+		try {
+			r.run();
+		} catch (NullPointerException e) {
+		} catch (Throwable e) {
+			throw new AssertionError("NPE Expected");
+		}
+	}
 
-@Test
-public void testHappyPath() {
-	JSJsonTransformation t1 = new JSJsonTransformation("function (e){ e.t1=true; } ");
-	JSJsonTransformation t2 = new JSJsonTransformation("function (e){ e.t2=true; } ");
-	JSJsonTransformation t3 = new JSJsonTransformation("function (e){ e.t3=true; } ");
+	@Test
+	public void testEmptyList() throws Exception {
+		assertThrows(IllegalArgumentException.class, () -> {
+			new JSJsonTransformationChain(new LinkedList<>());
+		});
+	}
 
-	JSJsonTransformationChain uut = new JSJsonTransformationChain(Arrays.asList(t1, t2, t3));
+	@Test
+	public void testHappyPath() {
+		JSJsonTransformation t1 = new JSJsonTransformation("function (e){ e.t1=true; } ");
+		JSJsonTransformation t2 = new JSJsonTransformation("function (e){ e.t2=true; } ");
+		JSJsonTransformation t3 = new JSJsonTransformation("function (e){ e.t3=true; } ");
 
-	JsonNodeFactory f = new JsonNodeFactory(false);
+		JSJsonTransformationChain uut = new JSJsonTransformationChain(Arrays.asList(t1, t2, t3));
 
-	ObjectNode node = new ObjectNode(f, Maps.newHashMap("initial", new TextNode("value")));
-	JsonNode afterTransformation = uut.transform(node);
+		JsonNodeFactory f = new JsonNodeFactory(false);
 
-	assertThat(afterTransformation.get("initial").asText()).isEqualTo("value");
-	assertThat(afterTransformation.get("t1").asText()).isEqualTo("true");
-	assertThat(afterTransformation.get("t2").asText()).isEqualTo("true");
-	assertThat(afterTransformation.get("t3").asText()).isEqualTo("true");
-}
+		ObjectNode node = new ObjectNode(f, Maps.newHashMap("initial", new TextNode("value")));
+		JsonNode afterTransformation = uut.transform(node);
+
+		assertThat(afterTransformation.get("initial").asText()).isEqualTo("value");
+		assertThat(afterTransformation.get("t1").asText()).isEqualTo("true");
+		assertThat(afterTransformation.get("t2").asText()).isEqualTo("true");
+		assertThat(afterTransformation.get("t3").asText()).isEqualTo("true");
+	}
 
 }

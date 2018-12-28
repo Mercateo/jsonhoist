@@ -35,7 +35,7 @@ class ClassPathResource {
 
 	public String getFilename() {
 		String externalForm = url.toExternalForm();
-		return externalForm.substring(externalForm.lastIndexOf("/"));
+		return externalForm.substring(externalForm.lastIndexOf("/")+1);
 	}
 
 }
