@@ -1,0 +1,10 @@
+|===
+|Name|Description
+
+|`Last-Event-ID`
+|ID of the last Fact, the client knows 
+
+|`Debug-Info`
+|String, which can be found in the logs afterwards
+
+|===
