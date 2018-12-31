@@ -21,6 +21,6 @@ These transformations can be expressed in an implementation of the `JsonTransfor
 
 In the future, these scripts can be loaded at runtime, so that a producer of a message can change his message in an incompatible way, as long as he provides a transformation to an earlier version, without breaking consumers.
 
-##Examples
+## Examples
 
-A simple example could be found in the test class HoistObjectMapper0Test 
+A simple example could be found in the test class HoistObjectMapperTest 
