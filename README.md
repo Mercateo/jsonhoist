@@ -1,4 +1,4 @@
-# Library for chained JSON Transformation (for instance Up-/Down-casting) according to a ruleset store in a repository. 
+# Library for chained JSON Transformation (for instance Up-/Down-casting) according to a ruleset stored in a repository. 
 
 [![CircleCI](https://circleci.com/gh/Mercateo/jsonhoist/tree/master.svg?style=svg)](https://circleci.com/gh/Mercateo/jsonhoist/tree/master)
 [![codecov](https://codecov.io/gh/Mercateo/jsonhoist/branch/master/graph/badge.svg)](https://codecov.io/gh/Mercateo/jsonhoist)
