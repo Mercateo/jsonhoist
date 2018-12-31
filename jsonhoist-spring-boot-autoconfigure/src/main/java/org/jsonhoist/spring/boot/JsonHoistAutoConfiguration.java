@@ -15,6 +15,8 @@
  */
 package org.jsonhoist.spring.boot;
 
+import java.io.IOException;
+
 import org.jsonhoist.HoistMetaDataProcessor;
 import org.jsonhoist.HoistMetadataProcessorImpl;
 import org.jsonhoist.HoistObjectMapper;
@@ -23,6 +25,7 @@ import org.jsonhoist.JsonHoistImpl;
 import org.jsonhoist.trans.ClassPathJSJsonTransformationLoader;
 import org.jsonhoist.trans.JsonTransformationRepository;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -51,10 +54,13 @@ public class JsonHoistAutoConfiguration {
 		return new JsonTransformationRepository();
 	}
 
-	@ConditionalOnMissingBean
+	@ConditionalOnProperty(prefix = "jsonhoist.repository.classpath", name = "enabled")
 	@Bean
-	public ClassPathJSJsonTransformationLoader loader(JsonTransformationRepository repo) {
-		return new ClassPathJSJsonTransformationLoader(repo);
+	public ClassPathJSJsonTransformationLoader loader(JsonTransformationRepository repo) throws IOException {
+		ClassPathJSJsonTransformationLoader classPathJSJsonTransformationLoader = new ClassPathJSJsonTransformationLoader(
+				repo);
+		classPathJSJsonTransformationLoader.load();
+		return classPathJSJsonTransformationLoader;
 	}
 
 	@ConditionalOnMissingBean
@@ -67,6 +73,12 @@ public class JsonHoistAutoConfiguration {
 	@Bean
 	public JsonHoist jsonHoist(HoistMetaDataProcessor proc, JsonTransformationRepository repo) {
 		return new JsonHoistImpl(proc, repo);
+	}
+
+	@ConditionalOnMissingBean
+	@Bean
+	public ObjectMapper objectMapper() {
+		return new ObjectMapper();
 	}
 
 }

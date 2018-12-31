@@ -21,6 +21,7 @@ import java.util.List;
 import org.jsonhoist.HoistMetaData;
 
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Impl of TransformationRepository, that loads transformation scripts from a
@@ -34,6 +35,7 @@ import lombok.NonNull;
  *
  * @author usr
  */
+@Slf4j
 public class ClassPathJSJsonTransformationLoader {
 
 	public static final String DEFAULT_RESOURCE_PATTERN = ".*/jsonhoist/repository/.*\\.js";
@@ -44,6 +46,8 @@ public class ClassPathJSJsonTransformationLoader {
 	@NonNull
 	private JsonTransformationRepository repo;
 
+	private boolean loaded = false;
+
 	public ClassPathJSJsonTransformationLoader(@NonNull JsonTransformationRepository repo) {
 		this(DEFAULT_RESOURCE_PATTERN, repo);
 	}
@@ -53,9 +57,15 @@ public class ClassPathJSJsonTransformationLoader {
 		this.repo = repo;
 	}
 
-	public JsonTransformationRepository load() throws IOException {
-		List<ClassPathResource> listOfMatchingResources = new ClassPathFilter(pattern).listRecursive();
-		listOfMatchingResources.forEach(res -> addResource(res, repo));
+	public synchronized JsonTransformationRepository load() throws IOException {
+		if (loaded)
+			log.warn("Already loaded");
+		else {
+			log.info("Loading transformations from Classpath");
+			List<ClassPathResource> listOfMatchingResources = new ClassPathFilter(pattern).listRecursive();
+			listOfMatchingResources.forEach(res -> addResource(res, repo));
+			loaded = true;
+		}
 		return repo;
 	}
 

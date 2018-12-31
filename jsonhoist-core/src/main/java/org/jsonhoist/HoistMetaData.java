@@ -15,6 +15,7 @@
  */
 package org.jsonhoist;
 
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.Value;
 
@@ -25,6 +26,7 @@ import lombok.Value;
  *
  */
 @Value(staticConstructor = "of")
+@EqualsAndHashCode(of = {"type", "version"})
 public class HoistMetaData {
 	@NonNull
 	String type;
