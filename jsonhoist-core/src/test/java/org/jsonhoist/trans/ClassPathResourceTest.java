@@ -16,8 +16,8 @@ public class ClassPathResourceTest {
 	public void translatesURISyntaxException() throws Exception {
 		uut = new ClassPathResource(url);
 		when(url.toURI()).thenThrow(URISyntaxException.class);
-		
-		assertThrows(IllegalStateException.class, ()->{
+
+		assertThrows(IllegalStateException.class, () -> {
 			uut.getURI();
 		});
 	}
@@ -28,8 +28,8 @@ public class ClassPathResourceTest {
 	@Test
 	public void testGetFilename() throws Exception {
 		uut = new ClassPathResource(getClass().getResource("/loadertest/1/testtype/1-2.js"));
-		
-		assertEquals("1-2.js",uut.getFilename());
+
+		assertEquals("1-2.js", uut.getFilename());
 
 	}
 
