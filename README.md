@@ -7,6 +7,7 @@
 <a href="https://www.apache.org/licenses/LICENSE-2.0">
     <img class="inline" src="https://img.shields.io/badge/license-ASL2-green.svg?style=flat">
 </a>
+[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=Mercateo/jsonhoist)](https://dependabot.com)
 [![MavenCentral](https://img.shields.io/maven-central/v/org.jsonhoist/jsonhoist.svg)](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22org.jsonhoist%22)
 
 ## TL;DR;
