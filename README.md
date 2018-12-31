@@ -1,5 +1,8 @@
 # JSONHoist is a library to transform JSON in steps.
 
+[![CircleCI](https://circleci.com/gh/uweschaefer/jsonhoist/tree/master.svg?style=svg)](https://circleci.com/gh/uweschaefer/jsonhoist/tree/master)
+[![codecov](https://codecov.io/gh/uweschaefer/jsonhoist/branch/master/graph/badge.svg)](https://codecov.io/gh/uweschaefer/jsonhoist)
+
 ## TL;DR;
 
 * Upcast persisted, deprecated models to current
