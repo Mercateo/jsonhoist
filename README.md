@@ -4,6 +4,7 @@
 [![codecov](https://codecov.io/gh/Mercateo/jsonhoist/branch/master/graph/badge.svg)](https://codecov.io/gh/Mercateo/jsonhoist)
 [![CodeFactor](https://www.codefactor.io/repository/github/mercateo/jsonhoist/badge)](https://www.codefactor.io/repository/github/mercateo/jsonhoist)
 [![MavenCentral](https://img.shields.io/maven-central/v/org.jsonhoist/jsonhoist.svg)](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22org.jsonhoist%22)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/739b29b2cdc14252a8f66aefbd71453b)](https://www.codacy.com/app/uwe/jsonhoist?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Mercateo/jsonhoist&amp;utm_campaign=Badge_Grade)
 <a href="https://www.apache.org/licenses/LICENSE-2.0">
     <img class="inline" src="https://img.shields.io/badge/license-ASL2-green.svg?style=flat">
 </a>
