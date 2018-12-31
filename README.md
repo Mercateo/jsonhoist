@@ -12,7 +12,7 @@
 
 * Upcast persisted, deprecated models to current
 * Upcast & Downcast in EventSourcing
-* Works with Jackson to deserialize into POJOs after transformation
+* Works with Jackson to optionally deserialize into POJOs after transformation
 
 ## Background
 
