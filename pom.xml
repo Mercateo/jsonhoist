@@ -8,7 +8,7 @@
   </parent>
   <groupId>org.jsonhoist</groupId>
   <artifactId>jsonhoist</artifactId>
-  <version>0.8.1</version>
+  <version>0.8.2-SNAPSHOT</version>
   <packaging>pom</packaging>
   <organization>
     <name>Mercateo AG</name>
@@ -31,7 +31,7 @@
   <scm>
     <connection>scm:git:git@gitlab.com:uweschaefer/jsonhoist.git</connection>
     <developerConnection>scm:git:git@github.com:uweschaefer/jsonhoist.git</developerConnection>
-    <tag>jsonhoist-0.8.1</tag>
+    <tag>HEAD</tag>
   </scm>
   <developers>
     <developer>
