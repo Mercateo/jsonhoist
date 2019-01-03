@@ -44,6 +44,10 @@ public class JsonTransformationRepository {
 
 		Optional<List<JsonTransformationStep>> path = path(new LinkedList<>(), from, to);
 		if (!path.isPresent()) {
+			// try implicit downcasting
+			graph.entrySet().stream().filter(e -> e.getKey().version() == from.version());
+		}
+		if (!path.isPresent()) {
 			throw new HoistException("Cannot hoist from " + from + " to " + to);
 		}
 		return path.get().stream().map(JsonTransformationStep::transformation).collect(Collectors.toList());
@@ -72,6 +76,13 @@ public class JsonTransformationRepository {
 						return possiblePath;
 					}
 				}
+			}
+		} else {
+			// try implicit downcast
+			long minor = from.minor();
+			if (minor > 0) {
+				HoistMetaData previousfrom = HoistMetaData.of(from.type(), from.version(), minor - 1);
+				return path(journey, previousfrom, to);
 			}
 		}
 		return Optional.empty();

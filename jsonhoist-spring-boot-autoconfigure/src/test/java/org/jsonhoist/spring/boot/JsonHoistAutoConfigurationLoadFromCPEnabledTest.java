@@ -42,7 +42,6 @@ public class JsonHoistAutoConfigurationLoadFromCPEnabledTest {
 
 	@Test
 	void testEnabledProperty() throws Exception {
-
 		assertNotNull(r.defaultPath(HoistMetaData.of("Foo", 1), HoistMetaData.of("Foo", 2)));
 	}
 }

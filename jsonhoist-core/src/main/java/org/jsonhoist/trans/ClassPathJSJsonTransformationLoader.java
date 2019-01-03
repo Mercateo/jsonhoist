@@ -71,19 +71,20 @@ public class ClassPathJSJsonTransformationLoader {
 
 	void addResource(ClassPathResource res, JsonTransformationRepository repo) {
 		try {
-
 			if (res != null) {
 				ResourceUriParser p = new ResourceUriParser(res.getURI());
 				String type = p.type();
 				String name = p.fileName();
-				name = name.substring(0, name.indexOf("."));
+				name = name.substring(0, name.lastIndexOf("."));
 				String[] split = name.split("-");
 				if (split.length != 2) {
 					throw new IllegalStateException("Cannot parse filename " + res.getFilename());
 				}
 
-				HoistMetaData from = HoistMetaData.of(type, Long.valueOf(split[0]));
-				HoistMetaData to = HoistMetaData.of(type, Long.valueOf(split[1]));
+				HoistMetaData from = HoistMetaData.of(type, split[0]);
+				HoistMetaData to = HoistMetaData.of(type, split[1]);
+
+				log.info("adding transformation '{}' as {}->{}", res.getFilename(), from, to);
 
 				JSJsonTransformation transformation = new JSJsonTransformation(res.getURI().toURL());
 				repo.register(from, to, transformation);

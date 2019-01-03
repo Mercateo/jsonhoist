@@ -30,7 +30,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import lombok.Value;
 
-public class JsonTransformationRepository0Test {
+public class JsonTransformationRepositoryTest {
 
 	private JsonTransformationRepository uut = new JsonTransformationRepository();
 

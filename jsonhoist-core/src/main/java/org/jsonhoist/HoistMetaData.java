@@ -15,9 +15,9 @@
  */
 package org.jsonhoist;
 
-import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.Value;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * ValueClass holding the necessary MetaData for transformation source or target
@@ -26,7 +26,7 @@ import lombok.Value;
  *
  */
 @Value(staticConstructor = "of")
-@EqualsAndHashCode(of = {"type", "version"})
+@Slf4j
 public class HoistMetaData {
 	@NonNull
 	String type;
@@ -37,6 +37,26 @@ public class HoistMetaData {
 
 	public static HoistMetaData of(@NonNull String type, long version) {
 		return of(type, version, 0);
+	}
+
+	public static HoistMetaData of(@NonNull String type, @NonNull String versionString) {
+		String[] split = versionString.split("\\.");
+		long major = Long.valueOf(split[0]);
+		long minor = 0;
+		if (split.length == 2)
+			minor = Long.valueOf(split[1]);
+		else
+			log.debug("Interpreting version string {} as {}.{} ", versionString, major,
+					minor + " - Please be explicit next time");
+
+		if (major < 0 || minor < 0)
+			throw new IllegalArgumentException("Negative version component found");
+
+		return HoistMetaData.of(type, major, minor);
+	}
+
+	public String toString() {
+		return type + ":" + version + "." + minor;
 	}
 
 }

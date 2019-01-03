@@ -21,9 +21,38 @@ import org.junit.jupiter.api.Test;
 
 public class HoistMetaDataTest {
 	@Test
-	public void testNullContract() throws Exception {
+	void testNullContract() throws Exception {
 		assertThrows(NullPointerException.class, () -> {
 			HoistMetaData.of(null, 1L);
 		});
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.jsonhoist.HoistMetaData#of(java.lang.String, java.lang.String)}.
+	 */
+	@Test
+	void testOfTypeAndVersionString() throws Exception {
+		assertThrows(NullPointerException.class, () -> {
+			HoistMetaData.of("Foo", (String) null);
+		});
+
+		assertThrows(NumberFormatException.class, () -> {
+			HoistMetaData.of("Foo", "abc");
+		});
+
+		assertEquals("Foo:2.1", HoistMetaData.of("Foo", "2.1").toString());
+		assertEquals("Foo:2.0", HoistMetaData.of("Foo", "2").toString());
+		assertEquals("Foo:0.1", HoistMetaData.of("Foo", "0.1").toString());
+
+		assertThrows(IllegalArgumentException.class, () -> {
+			HoistMetaData.of("Foo", "-1.2");
+		});
+	}
+
+	@Test
+	void testEquals() {
+		assertEquals(HoistMetaData.of("Foo", "2"), HoistMetaData.of("Foo", "2.0"));
+		assertNotEquals(HoistMetaData.of("Foo", "2.1"), HoistMetaData.of("Foo", "2.0"));
 	}
 }
