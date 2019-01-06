@@ -8,7 +8,7 @@
   </parent>
   <groupId>org.jsonhoist</groupId>
   <artifactId>jsonhoist</artifactId>
-  <version>0.8.2-SNAPSHOT</version>
+  <version>0.8.2</version>
   <packaging>pom</packaging>
   <organization>
     <name>Mercateo AG</name>
@@ -31,7 +31,7 @@
   <scm>
     <connection>scm:git:git@gitlab.com:uweschaefer/jsonhoist.git</connection>
     <developerConnection>scm:git:git@github.com:uweschaefer/jsonhoist.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>jsonhoist-0.8.2</tag>
   </scm>
   <developers>
     <developer>
@@ -244,7 +244,7 @@
                     </goals>
                   </pluginExecutionFilter>
                   <action>
-                    <ignore/>
+                    <ignore />
                   </action>
                 </pluginExecution>
                 <pluginExecution>
@@ -260,7 +260,7 @@
                     </goals>
                   </pluginExecutionFilter>
                   <action>
-                    <ignore/>
+                    <ignore />
                   </action>
                 </pluginExecution>
                 <pluginExecution>
@@ -273,7 +273,7 @@
                     </goals>
                   </pluginExecutionFilter>
                   <action>
-                    <ignore/>
+                    <ignore />
                   </action>
                 </pluginExecution>
               </pluginExecutions>
