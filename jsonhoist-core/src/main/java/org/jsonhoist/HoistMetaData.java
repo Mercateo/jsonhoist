@@ -15,6 +15,8 @@
  */
 package org.jsonhoist;
 
+import java.math.BigDecimal;
+
 import lombok.NonNull;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
@@ -57,6 +59,16 @@ public class HoistMetaData {
 
 	public String toString() {
 		return type + ":" + version + "." + minor;
+	}
+
+	public boolean isCompatible(HoistMetaData from) {
+		return type.equals(from.type) && version == from.version;
+	}
+
+	public long distance(HoistMetaData from) {
+		long v = Math.abs(from.version - this.version);
+		long m = Math.abs(from.minor - this.minor);
+		return v * 1_000_000 + m;
 	}
 
 }

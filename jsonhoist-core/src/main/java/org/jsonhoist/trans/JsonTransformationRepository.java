@@ -15,13 +15,15 @@
  */
 package org.jsonhoist.trans;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.jsonhoist.HoistMetaData;
@@ -44,13 +46,10 @@ public class JsonTransformationRepository {
 
 		Optional<List<JsonTransformationStep>> path = path(new LinkedList<>(), from, to);
 		if (!path.isPresent()) {
-			// try implicit downcasting
-			graph.entrySet().stream().filter(e -> e.getKey().version() == from.version());
-		}
-		if (!path.isPresent()) {
 			throw new HoistException("Cannot hoist from " + from + " to " + to);
 		}
-		return path.get().stream().map(JsonTransformationStep::transformation).collect(Collectors.toList());
+		return path.get().stream().map(JsonTransformationStep::transformation)
+				.filter(t -> !(t instanceof NOPTransformation)).collect(Collectors.toList());
 	}
 
 	private Optional<List<JsonTransformationStep>> path(@NonNull List<JsonTransformationStep> journey,
@@ -72,17 +71,10 @@ public class JsonTransformationRepository {
 					Optional<List<JsonTransformationStep>> possiblePath = path(newPossibleJourney, transformationTarget,
 							to);
 					if (possiblePath.isPresent()) {
-						// first wins
+						// TODO first wins
 						return possiblePath;
 					}
 				}
-			}
-		} else {
-			// try implicit downcast
-			long minor = from.minor();
-			if (minor > 0) {
-				HoistMetaData previousfrom = HoistMetaData.of(from.type(), from.version(), minor - 1);
-				return path(journey, previousfrom, to);
 			}
 		}
 		return Optional.empty();
@@ -93,13 +85,28 @@ public class JsonTransformationRepository {
 	// possibly containing steps that transform across multiple versions),
 	// starting from version "from".
 	private Optional<List<JsonTransformationStep>> calculateOptions(HoistMetaData from) {
-		List<JsonTransformationStep> edgesAsRegistered = graph.get(from);
-		List<JsonTransformationStep> options = null;
-		if (edgesAsRegistered != null) {
-			options = new ArrayList<>(edgesAsRegistered);
-			Collections.reverse(options);
+
+		List<JsonTransformationStep> result = new LinkedList<>();
+
+		// edges as registered
+		result.addAll(graph.getOrDefault(from, Collections.emptyList()));
+
+		Set<HoistMetaData> targets = result.stream().map(JsonTransformationStep::target).collect(Collectors.toSet());
+
+		List<JsonTransformationStep> casts = new LinkedList<>();
+		// collect and add all possible edges within same version via up/down-casting
+		graph.keySet().stream().filter(k -> k.isCompatible(from)).filter(k -> !targets.contains(k)).forEach(k -> {
+			casts.add(new JsonTransformationStep(k, NOPTransformation.INSTANCE));
+		});
+		sortByDistanceFrom(from, casts);
+
+		result.addAll(casts);
+
+		if (result.isEmpty())
+			return Optional.empty();
+		else {
+			return Optional.ofNullable(result);
 		}
-		return Optional.ofNullable(options);
 	}
 
 	protected boolean alreadyVisited(List<JsonTransformationStep> journey,
@@ -130,7 +137,21 @@ public class JsonTransformationRepository {
 				graph.put(from, list);
 			}
 			list.add(new JsonTransformationStep(to, transformation));
+			sortByDistanceFrom(from, list);
 		}
+	}
+
+	private void sortByDistanceFrom(HoistMetaData from, List<JsonTransformationStep> list) {
+		// sort by smallest distance
+		Collections.sort(list, new Comparator<JsonTransformationStep>() {
+
+			@Override
+			public int compare(JsonTransformationStep o1, JsonTransformationStep o2) {
+				long d1 = from.distance(o1.target());
+				long d2 = from.distance(o2.target());
+				return Long.valueOf(d1).compareTo(d2);
+			}
+		});
 	}
 
 }
