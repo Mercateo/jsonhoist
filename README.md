@@ -9,6 +9,7 @@
 </a>
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=Mercateo/jsonhoist)](https://dependabot.com)
 [![MavenCentral](https://img.shields.io/maven-central/v/org.jsonhoist/jsonhoist.svg)](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22org.jsonhoist%22)
+[![DepShield Badge](https://depshield.sonatype.org/badges/Mercateo/jsonhoist/depshield.svg)](https://depshield.github.io)
 
 ## TL;DR;
 
