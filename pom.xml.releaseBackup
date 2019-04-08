@@ -4,11 +4,11 @@
   <parent>
     <groupId>com.mercateo.oss</groupId>
     <artifactId>oss-parent-pom</artifactId>
-    <version>1.0.7</version>
+    <version>1.0.6</version>
   </parent>
   <groupId>org.jsonhoist</groupId>
   <artifactId>jsonhoist</artifactId>
-  <version>0.8.4-SNAPSHOT</version>
+  <version>0.8.3-SNAPSHOT</version>
   <packaging>pom</packaging>
   <organization>
     <name>Mercateo AG</name>
@@ -44,12 +44,12 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <mockito.version>2.25.1</mockito.version>
-    <assertj.version>3.12.2</assertj.version>
+    <assertj.version>3.11.1</assertj.version>
+    <mockito.version>2.23.4</mockito.version>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <formatter.config>${project.basedir}/src/eclipse/config/</formatter.config>
-    <lombok.version>1.18.6</lombok.version>
+    <lombok.version>1.18.4</lombok.version>
   </properties>
   <dependencies>
     <dependency>
@@ -61,33 +61,26 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>1.7.26</version>
+      <version>1.7.25</version>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
-      <version>5.4.2</version>
+      <version>5.3.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
-      <version>5.4.2</version>
+      <version>5.3.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.junit.platform</groupId>
       <artifactId>junit-platform-engine</artifactId>
-      <version>1.4.1</version>
+      <version>1.3.2</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.junit.platform</groupId>
-      <artifactId>junit-platform-commons</artifactId>
-      <version>1.4.1</version>
-      <scope>test</scope>
-    </dependency>
-   
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
@@ -154,7 +147,7 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.3</version>
+        <version>0.8.2</version>
         <configuration>
           <excludes>
             <exclude>**/*Configuration.*</exclude>
@@ -251,7 +244,7 @@
                     </goals>
                   </pluginExecutionFilter>
                   <action>
-                    <ignore/>
+                    <ignore />
                   </action>
                 </pluginExecution>
                 <pluginExecution>
@@ -267,7 +260,7 @@
                     </goals>
                   </pluginExecutionFilter>
                   <action>
-                    <ignore/>
+                    <ignore />
                   </action>
                 </pluginExecution>
                 <pluginExecution>
@@ -280,7 +273,7 @@
                     </goals>
                   </pluginExecutionFilter>
                   <action>
-                    <ignore/>
+                    <ignore />
                   </action>
                 </pluginExecution>
               </pluginExecutions>
@@ -290,4 +283,5 @@
       </plugins>
     </pluginManagement>
   </build>
+
 </project>
