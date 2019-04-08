@@ -13,3 +13,5 @@ src/gen/**
 *~
 
 
+jsonhoist-core/bin/
+jsonhoist-spring-boot-autoconfigure/bin/
