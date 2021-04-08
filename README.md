@@ -1,3 +1,9 @@
+# This project is in archived state and no longer maintained. 
+
+The main usecase for this was event up/down-casting used in conjuction with [factcast](https://factcast.org). Now, that factcast has an own solution for this problem for a year, there is little intereset in this lib, as well as no time / energy for maintainance.
+
+If you want to resurrect this project, please let us know.
+
 # Library for chained JSON Transformation (for instance Up-/Down-casting) according to a ruleset stored in a repository. 
 
 [![CircleCI](https://circleci.com/gh/Mercateo/jsonhoist/tree/master.svg?style=svg)](https://circleci.com/gh/Mercateo/jsonhoist/tree/master)
